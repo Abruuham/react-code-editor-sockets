@@ -1,3 +1,6 @@
+# Code from https://github.com/manuarora700/react-code-editor. I have added web sockets in order to communicate in between two different code editors. This will allow for pair programming.
+
+
 # CodeRush - Compile and Execute code in 40+ languages
 
 ⚡️ A code editor that compiles and runs your code on the web.
