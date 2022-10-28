@@ -12,9 +12,17 @@
   padding: 0;
 }
 body {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 300;
+  font-family: 'MonoLisa-Regular', sans-serif;
+  src: local('MonoLisa-Regular'), url(./fonts/MonoLisa-Regular.otf) format('otf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
   font-size: 14px;
+  background-color: rgb(37,53,62);
+}
+
+.compile-btn{
+  background-color: #2FD3B1;
 }
 
 .listItem:hover {
@@ -31,8 +39,9 @@ body {
   fill:#000000;
 }
 .github-corner:hover .octo-arm {
-  animation:octocat-wave .56s;
+  animation:octocat-wave .05s;
 }
+
 @keyframes octocat-wave {
   0%, 100% {
     transform:rotate(0);

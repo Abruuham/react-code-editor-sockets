@@ -5,6 +5,8 @@ import CodeEditorWindow from "./CodeEditorWindow";
 import axios from "axios";
 import { classnames } from "../utils/general";
 import { languageOptions } from "../constants/languageOptions";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,10 +20,16 @@ import OutputDetails from "./OutputDetails";
 import ThemeDropdown from "./ThemeDropdown";
 import LanguagesDropdown from "./LanguagesDropdown";
 
-const javascriptDefault = `// some comment`;
+const javaDefault = `public class Main {
+      public static void main(String[] args){
+          System.out.println("Hello World!");
+      }
+      void Solution(){
+  } 
+}`;
 
 const Landing = () => {
-  const [code, setCode] = useState(javascriptDefault);
+  const [code, setCode] = useState(javaDefault);
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
@@ -176,16 +184,27 @@ const Landing = () => {
         draggable
         pauseOnHover
       />
-      <div className="h-4 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
+      {/* <div className="h-4 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div> */}
       <div className="flex flex-row">
-        <div className="px-4 py-2">
-          <LanguagesDropdown onSelectChange={onSelectChange} />
+        <div className="px-4 py-2" style={{ "color":"white"}}>
+            <button onClick={handleCompile} disabled={!code} className={classnames(
+                                    "compile-btn z-10 rounded-md px-4 py-2 hover:shadow transition duration-200 flex-shrink-0",
+                                    !code ? "opacity-50" : ""
+                                  )}>
+                {processing ? "Processing..." : "Run "}
+                {processing ? "" : <FontAwesomeIcon icon={faCaretRight} style={{"color": "white", "background":"transparent"}}/>}
+                         
+            </button>
+            
         </div>
         <div className="px-4 py-2">
+          <LanguagesDropdown onSelectChange={onSelectChange}/>
+        </div>
+        {/* <div className="px-4 py-2">
           <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-        </div>
+        </div> */}
       </div>
-      <div className="flex flex-row space-x-4 items-start px-4 py-4">
+      <div className="flex flex-row space-x-4 items-start px-4 py-4 " style={{"paddingTop": 0}}>
         <div className="flex flex-col w-full h-full justify-start items-end">
           <CodeEditorWindow
             code={code}
@@ -195,24 +214,16 @@ const Landing = () => {
           />
         </div>
 
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+        
+        <div className="right-container flex flex-shrink-0 w-[30%] flex-col h-full">
           <OutputWindow outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
+          {/* <div className="flex flex-col items-end">
             <CustomInput
               customInput={customInput}
               setCustomInput={setCustomInput}
             />
-            <button
-              onClick={handleCompile}
-              disabled={!code}
-              className={classnames(
-                "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
-                !code ? "opacity-50" : ""
-              )}
-            >
-              {processing ? "Processing..." : "Compile and Execute"}
-            </button>
-          </div>
+            
+          </div> */}
           {outputDetails && <OutputDetails outputDetails={outputDetails} />}
         </div>
       </div>
