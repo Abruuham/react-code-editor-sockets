@@ -19,6 +19,7 @@ import CustomInput from "./CustomInput";
 import OutputDetails from "./OutputDetails";
 import ThemeDropdown from "./ThemeDropdown";
 import LanguagesDropdown from "./LanguagesDropdown";
+import { Buffer } from 'buffer';
 
 const javaDefault = `public class Main {
       public static void main(String[] args){
@@ -51,6 +52,7 @@ const Landing = () => {
       handleCompile();
     }
   }, [ctrlPress, enterPress]);
+
   const onChange = (action, data) => {
     switch (action) {
       case "code": {
@@ -67,8 +69,8 @@ const Landing = () => {
     const formData = {
       language_id: language.id,
       // encode source code in base64
-      source_code: btoa(code),
-      stdin: btoa(customInput),
+      source_code: Buffer.from(code).toString('base64'),
+      stdin: Buffer.from(code).toString('base64'),
     };
     const options = {
       method: "POST",
@@ -82,6 +84,7 @@ const Landing = () => {
       },
       data: formData,
     };
+    console.log(options);
 
     axios
       .request(options)
